@@ -1,8 +1,13 @@
-%pip install langchain langgraph langchain_community langchain_core langchain_text_splitters requests bs4 python-dotenv
-%pip install langchain langchain-openai openai
-%pip install langchain-community grpcio requests
-%pip install yandexcloud
-%pip install vk_api
+import os
+import vk_api
+import time
+import re
+import sqlite3
+from datetime import datetime
+from requests.exceptions import ReadTimeout, ConnectionError
+from langchain_openai import ChatOpenAI
+from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
+from collections import defaultdict
 
 def init_db(db_path):
     """
@@ -56,20 +61,6 @@ def init_db(db_path):
     conn.commit()
     conn.close()
 
-
-
-
-
-import os
-import vk_api
-import time
-import re
-import sqlite3
-from datetime import datetime
-from requests.exceptions import ReadTimeout, ConnectionError
-from langchain_openai import ChatOpenAI
-from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
-from collections import defaultdict
 
 
 # Кэш для хранения результатов проверки подписок с TTL

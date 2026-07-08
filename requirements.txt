@@ -1,0 +1,8 @@
+vk_api
+langchain
+langgraph
+langchain-openai
+openai
+requests
+bs4
+python-dotenv

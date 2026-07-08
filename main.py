@@ -431,7 +431,7 @@ def main():
                     if is_subscriber:
                         if user_id not in user_data:
                             internal_user_id = str(user_id)  # генерируем user_id на основе VK ID
-                            save_user_mapping(user_id, internal_user_id)  # сохраняем в БД
+                            save_user_mapping(user_id, internal_user_id, db_path)  # сохраняем в БД
     
                             user_data[user_id] = {
                                 'current_question_index': 0,
@@ -471,7 +471,7 @@ def main():
                                 send_message(vk, user_id, final_message)
     
                                 # Пытаемся сохранить ответы в БД 
-                                save_success = save_user_answers(user_id, answers)
+                                save_success = save_user_answers(user_id, answers, db_path)
                                 if not save_success:
                                     print(f"Предупреждение: не удалось сохранить ответы пользователя {user_id} в БД")
                              
@@ -524,7 +524,7 @@ def main():
 
                     
                     elif not is_subscriber:
-                        user_status = get_user_status(user_id)
+                        user_status = get_user_status(user_id, db_path)
                         print(f"Статус пользователя {user_id}: {user_status}")
                         
                         if user_status == 'free_day':
@@ -581,7 +581,7 @@ def main():
 
                                      # Если пользователь был на free_day, меняем статус после завершения цикла
                                     if user_status == 'free_day':
-                                        update_success = update_user_status_to_no_free_day(user_id)
+                                        update_success = update_user_status_to_no_free_day(user_id, db_path)
                                         if update_success:
                                             print(f"Пользователь {user_id} завершил бесплатный период, статус изменён.")
                                         else:

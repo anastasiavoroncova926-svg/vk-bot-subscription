@@ -314,8 +314,8 @@ def generate_meal_plan(answers, days=1):
         "🥗 Ужин: [блюдо] ([ингредиенты])"  
     )
     try:
-        response = deepseek_llm.invoke(prompt)
-        cleaned_response = clean_response(response.content)  # Очищаем ответ
+        response_text = deepseek_llm.invoke(prompt)  # это уже строка
+        cleaned_response = clean_response(response_text)
         return cleaned_response
     except Exception as e:
         return f"Ошибка при генерации плана питания: {e}"
@@ -340,8 +340,8 @@ def edit_meal_plan(answers, current_plan, change_request):
         "🍏 Полдник: [блюдо] ([ингредиенты])"
         "🥗 Ужин: [блюдо] ([ингредиенты])"      )
     try:
-        response = deepseek_llm.invoke(prompt)
-        cleaned_response = clean_response(response.content)  # Очищаем ответ
+        response_text = deepseek_llm.invoke(prompt)
+        cleaned_response = clean_response(response_text)        
         return cleaned_response
     except Exception as e:
         return f"Ошибка при редактировании плана питания: {e}"

@@ -276,7 +276,7 @@ questions = [
 ]
 
 
-# Создаём объект для работы с моделью DeepSeek через OpenRouter
+# Создаём объект для работы с моделью 
 load_dotenv()
 
 YANDEX_CLOUD_API_KEY = os.getenv('YANDEX_CLOUD_API_KEY')
@@ -285,7 +285,7 @@ YANDEX_CLOUD_MODEL = "aliceai-llm/latest"
 
 model=f"gpt://{YANDEX_CLOUD_FOLDER}/{YANDEX_CLOUD_MODEL}"
 
-deepseek_llm = YandexGPT(
+llm = YandexGPT(
     iam_token = YANDEX_CLOUD_API_KEY,
     model_uri = model
 )
@@ -314,7 +314,7 @@ def generate_meal_plan(answers, days=1):
         "🥗 Ужин: [блюдо] ([ингредиенты])"  
     )
     try:
-        response_text = deepseek_llm.invoke(prompt)  # это уже строка
+        response_text = llm.invoke(prompt)  # это уже строка
         cleaned_response = clean_response(response_text)
         return cleaned_response
     except Exception as e:
@@ -340,7 +340,7 @@ def edit_meal_plan(answers, current_plan, change_request):
         "🍏 Полдник: [блюдо] ([ингредиенты])"
         "🥗 Ужин: [блюдо] ([ингредиенты])"      )
     try:
-        response_text = deepseek_llm.invoke(prompt)
+        response_text = llm.invoke(prompt)
         cleaned_response = clean_response(response_text)        
         return cleaned_response
     except Exception as e:

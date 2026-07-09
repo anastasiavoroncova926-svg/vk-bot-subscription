@@ -8,6 +8,8 @@ from requests.exceptions import ReadTimeout, ConnectionError
 from langchain_openai import ChatOpenAI
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from collections import defaultdict
+from langchain_community.llms import YandexGPT
+from dotenv import load_dotenv
 
 def init_db(db_path):
     """
@@ -275,10 +277,17 @@ questions = [
 
 
 # Создаём объект для работы с моделью DeepSeek через OpenRouter
-deepseek_llm = ChatOpenAI(
-    api_key=os.environ["OPENROUTER_API_KEY"],
-    base_url="https://openrouter.ai/api/v1",
-    model="deepseek/deepseek-chat-v3-0324"
+load_dotenv()
+
+YANDEX_CLOUD_API_KEY = os.getenv('YANDEX_CLOUD_API_KEY')
+YANDEX_CLOUD_FOLDER = os.getenv('YANDEX_CLOUD_FOLDER')
+YANDEX_CLOUD_MODEL = "aliceai-llm/latest"
+
+model=f"gpt://{YANDEX_CLOUD_FOLDER}/{YANDEX_CLOUD_MODEL}"
+
+deepseek_llm = YandexGPT(
+    iam_token = YANDEX_CLOUD_API_KEY,
+    model_uri = model
 )
 
 def generate_meal_plan(answers, days=1):

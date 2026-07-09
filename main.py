@@ -10,6 +10,7 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from collections import defaultdict
 import requests
 import json
+from langchain_community.llms import YandexGPT
 from dotenv import load_dotenv
 
 def init_db(db_path):

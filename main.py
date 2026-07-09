@@ -12,6 +12,14 @@ import requests
 import json
 from langchain_community.llms import YandexGPT
 from dotenv import load_dotenv
+from dotenv import load_dotenv
+
+load_dotenv()  # загружает .env, если он есть
+
+DATA_DIR = os.getenv('DATA_DIR')
+os.makedirs(DATA_DIR, exist_ok=True)
+db_path = os.path.join(DATA_DIR, 'bot.db')
+
 
 def init_db(db_path):
     """

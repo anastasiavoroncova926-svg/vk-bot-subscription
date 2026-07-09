@@ -8,7 +8,8 @@ from requests.exceptions import ReadTimeout, ConnectionError
 from langchain_openai import ChatOpenAI
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from collections import defaultdict
-from langchain_community.llms import YandexGPT
+import requests
+import json
 from dotenv import load_dotenv
 
 def init_db(db_path):

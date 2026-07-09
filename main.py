@@ -539,7 +539,7 @@ def main():
                         if user_status == 'free_day':
                             if user_id not in user_data:
                                 internal_user_id = str(user_id)  # генерируем user_id на основе VK ID
-                                save_user_mapping(user_id, internal_user_id)  # сохраняем в БД
+                                save_user_mapping(user_id, internal_user_id, db_path)  # сохраняем в БД
         
                                 user_data[user_id] = {
                                     'current_question_index': 1,
@@ -579,7 +579,7 @@ def main():
                                     send_message(vk, user_id, final_message)
                 
                                     # Пытаемся сохранить ответы в БД 
-                                    save_success = save_user_answers(user_id, answers)
+                                    save_success = save_user_answers(user_id, answers, db_path)
                                     if not save_success:
                                         print(f"Предупреждение: не удалось сохранить ответы пользователя {user_id} в БД")
                                          

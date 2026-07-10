@@ -633,7 +633,7 @@ def main():
                         elif user_status == 'no_free_day':
                             donation_message = (
                                 "Для использования бота необходима подписка VK Donut.\n\n"
-                                "[https://vk.ru/tasty__stories?analytics_screen=group&levelId=3340&source=donut_banner&w=donut_payment-234208989|Оформить подписку]\n\n"  # замените на ID вашей группы
+                                "[https://vk.com/tasty__stories?w=donut_payment-234208989&levelId=3340|Оформить подписку]\n\n"  # замените на ID вашей группы
                                 "После оформления напишите любое сообщение снова."
                             )
                             send_message(vk, user_id, donation_message)

@@ -264,6 +264,37 @@ def clean_response(text):
     text = re.sub(r'\*\*(.+?)\*\*', r'\1', text)
     return text
 
+# Добавление пользователя в бд
+def ensure_user_in_db(vk_user_id, internal_user_id, db_path):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    try:
+        # Сначала проверяем, есть ли пользователь по vk_user_id
+        cursor.execute(
+            'SELECT id FROM users WHERE vk_user_id = ?',
+            (vk_user_id,)
+        )
+        if cursor.fetchone() is None:
+            # Пользователя нет — вставляем новую запись
+            cursor.execute(
+                '''
+                INSERT INTO users (vk_user_id, user_id, status)
+                VALUES (?, ?, ?)
+                ''',
+                (vk_user_id, internal_user_id, 'free_day')
+            )
+            conn.commit()
+            print(f"Пользователь {vk_user_id} добавлен в БД со статусом free_day")
+            return True
+        else:
+            # Пользователь уже есть — статус не трогаем, чтобы не «сбросить» no_free_day
+            return False
+    except sqlite3.Error as e:
+        print(f"Ошибка при проверке/добавлении пользователя в БД: {e}")
+        return False
+    finally:
+        conn.close()
 
 # Настройки
 GROUP_TOKEN = os.environ["VK_GROUP_TOKEN"]
@@ -436,6 +467,9 @@ def main():
                 if event.type == VkBotEventType.MESSAGE_NEW:
                     user_id = event.object.message['from_id']
                     message_text = event.object.message['text'].strip().lower()
+
+                    internal_user_id = str(user_id)
+                    ensure_user_in_db(user_id, internal_user_id, db_path)
 
                     # Проверяем подписку Donut (с использованием кэша)
                     is_subscriber = check_donut_subscription(vk, user_id, GROUP_ID)

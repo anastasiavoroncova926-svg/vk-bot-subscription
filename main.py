@@ -528,7 +528,7 @@ def main():
                                 send_message(vk, user_id, welcome_message)
                                 ask_next_question(vk, user_id)
                             else:
-                                send_message(vk, user_id, "Чтобы составить новое меню, напишите «меню». Если у вас есть другой вопрос — расскажите, чем ещё могу помочь.")
+                                send_message(vk, user_id, "Чтобы составить новое меню, напишите «меню».")
 
 
 
